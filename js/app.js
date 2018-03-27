@@ -29,9 +29,16 @@ for (let i=0; i<deckLi.length; i++) {
 }
 }
 
+function showCard(card){
+  card.classList.add("open", "show");
+}
+
 prepareDeck();
 
-
+deck.addEventListener("click", function(event){
+  let target = event.target;
+  showCard(target);
+})
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
