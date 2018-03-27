@@ -32,12 +32,29 @@ for (let i=0; i<deckLi.length; i++) {
 function showCard(card){
   card.classList.add("open", "show");
 }
+function checkCard(currentCard){
+  open.forEach(function(openCard){
+    if (openCard.children[0].className === currentCard.children[0].className) {
+      console.log('function checkCard: opencard: ' + openCard + ' current card: ' + currentCard);
+      matchCard(openCard);
+      matchCard(currentCard);
+    }
+  });
+    open.push(currentCard);
+}
+function matchCard(matched) {
+  matched.classList.add("match");
+  matched.classList.remove("open", "show");
 
+}
 prepareDeck();
 
 deck.addEventListener("click", function(event){
   let target = event.target;
   showCard(target);
+  checkCard(target);
+
+
 })
 /*
  * set up the event listener for a card. If a card is clicked:
