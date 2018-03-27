@@ -32,28 +32,42 @@ for (let i=0; i<deckLi.length; i++) {
 function showCard(card){
   card.classList.add("open", "show");
 }
+
+function hideCard(card1, card2){
+    open.length = 0; //clear array
+    setTimeout(function() {
+    card1.classList.remove("open", "show");
+    card2.classList.remove("open", "show");
+  }, 1000);
+  }
+
 function checkCard(currentCard){
-  open.forEach(function(openCard){
-    if (openCard.children[0].className === currentCard.children[0].className) {
-      console.log('function checkCard: opencard: ' + openCard + ' current card: ' + currentCard);
-      matchCard(openCard);
+if (open.length > 1) { //two cards to compare
+  let recentOpen = open[1]; //card added before current
+    if (recentOpen.children[0].className === currentCard.children[0].className) { //see if they have the same icons
       matchCard(currentCard);
+      matchCard(recentOpen); //mark both of them as matched
     }
-  });
-    open.push(currentCard);
+    else {
+      hideCard(currentCard, recentOpen); //if cards not match, hide both
+    }
+    }
 }
 function matchCard(matched) {
   matched.classList.add("match");
   matched.classList.remove("open", "show");
 
 }
-prepareDeck();
+
+prepareDeck(); //mix and display cards
 
 deck.addEventListener("click", function(event){
   let target = event.target;
-  showCard(target);
-  checkCard(target);
-
+  if (!(target.classList.contains("match") || target.classList.contains("show")) && target.tagName === "LI") { //exclude other clicks than on li and with class open or match
+    open.unshift(target); //add clicked card to array
+    showCard(target);
+    checkCard(target);
+}
 
 })
 /*
