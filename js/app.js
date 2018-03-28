@@ -38,7 +38,7 @@ function hideCard(card1, card2){
     setTimeout(function() {
     card1.classList.remove("open", "show");
     card2.classList.remove("open", "show");
-  }, 1000);
+  }, 800);
   }
 
 function checkCard(currentCard){
@@ -54,8 +54,14 @@ if (open.length > 1) { //two cards to compare
     }
 }
 function matchCard(matched) {
-  matched.classList.add("match");
+  setTimeout(function() {
+  matched.classList.add("match", "match-effect");
   matched.classList.remove("open", "show");
+  setTimeout(function() {
+      matched.classList.remove("match-effect");
+  }, 1000)
+}, 1000);
+
 
 }
 
