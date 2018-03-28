@@ -4,6 +4,7 @@ let cardsList = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube'
 let deck = document.querySelector('.deck');
 let open = [];
 cardsList = cardsList.concat(cardsList); //each card appears twice
+let counter = 0;
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -61,8 +62,11 @@ function matchCard(matched) {
       matched.classList.remove("match-effect");
   }, 1000)
 }, 1000);
+}
 
-
+function countMoves() {
+  counter += 1;
+  document.querySelector(".moves").textContent = counter;
 }
 
 prepareDeck(); //mix and display cards
@@ -73,6 +77,7 @@ deck.addEventListener("click", function(event){
     open.unshift(target); //add clicked card to array
     showCard(target);
     checkCard(target);
+    countMoves();
 }
 
 })
