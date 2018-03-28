@@ -3,9 +3,8 @@
 let cardsList = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
 let deck = document.querySelector('.deck');
 let open = [];
-cardsList = cardsList.concat(cardsList); //each card appears twice
 let counter = 0;
-
+cardsList = cardsList.concat(cardsList); //each card appears twice
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -44,7 +43,7 @@ function hideCard(card1, card2){
 
 function checkCard(currentCard){
 if (open.length > 1) { //two cards to compare
-    countMoves();
+    countMoves(); //one move = two cards
   let recentOpen = open[1]; //card added before current
     if (recentOpen.children[0].className === currentCard.children[0].className) { //see if they have the same icons
       matchCard(currentCard);
@@ -69,11 +68,16 @@ function countMoves() {
   counter += 1;
   console.log('counter: ' + counter);
   let step = 10;
+  const movesLabel = document.querySelector(".moves-label");
+  if (counter === 1) {
+    movesLabel.textContent = "Move";
+  }
+  else {
+    movesLabel.textContent = "Moves";
+  }
     document.querySelector(".moves").textContent = counter;
-  starsLi = document.querySelector(".stars").children;
-console.log('counter % step: ' + counter % step);
   if (counter%step === 0 && counter <= step * 3){ //remove star each amount of points defined in step (no more than 3 times)
-    starsLi[0].remove();
+    document.querySelector(".stars").children[0].remove();
   }
 }
 
