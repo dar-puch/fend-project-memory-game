@@ -44,6 +44,7 @@ function hideCard(card1, card2){
 
 function checkCard(currentCard){
 if (open.length > 1) { //two cards to compare
+    countMoves();
   let recentOpen = open[1]; //card added before current
     if (recentOpen.children[0].className === currentCard.children[0].className) { //see if they have the same icons
       matchCard(currentCard);
@@ -66,7 +67,14 @@ function matchCard(matched) {
 
 function countMoves() {
   counter += 1;
-  document.querySelector(".moves").textContent = counter;
+  console.log('counter: ' + counter);
+  let step = 10;
+    document.querySelector(".moves").textContent = counter;
+  starsLi = document.querySelector(".stars").children;
+console.log('counter % step: ' + counter % step);
+  if (counter%step === 0 && counter <= step * 3){ //remove star each amount of points defined in step (no more than 3 times)
+    starsLi[0].remove();
+  }
 }
 
 prepareDeck(); //mix and display cards
@@ -77,7 +85,7 @@ deck.addEventListener("click", function(event){
     open.unshift(target); //add clicked card to array
     showCard(target);
     checkCard(target);
-    countMoves();
+
 }
 
 })
