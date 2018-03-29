@@ -9,7 +9,7 @@ let overlay = document.querySelector(".overlay");
 let countTimes = 0
 let startTime = 0;
 let endTime = 0;
-let finished = false;
+let timerId;
 cardsList = cardsList.concat(cardsList); //each card appears twice
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -88,13 +88,21 @@ function countMoves() {
     document.querySelector(".moves").textContent = movesCounter;
   if (movesCounter % step === 0 && movesCounter <= step * 3){ //remove star each amount of points defined in step (no more than 3 times)
     document.querySelector(".stars").children[0].remove();
-    console.log('document.querySelector(".stars").innerHtml' + document.querySelector(".stars").innerHTML)
   }
+}
+
+function timing(start) {
+  timerId = setInterval(function() {
+    now = Date.now();
+    elapsedTime = Math.floor((now - start)/1000);
+    document.querySelector(".time").textContent = elapsedTime;
+  }, 1000);
+
 }
 
 function gameCompleted() {
 overlay.style.display="block";
-finished = true;
+clearInterval(timerId);
 let stars = document.querySelector(".stars").innerHTML;
 document.querySelector(".result-stars").innerHTML = stars;
 document.querySelector(".result-moves").textContent = movesCounter;
@@ -113,19 +121,13 @@ deck.addEventListener("click", function(event){
   if (!(target.classList.contains("match") || target.classList.contains("show")) && target.tagName === "LI") { //exclude other clicks than on li and with class open or match
     open.unshift(target); //add clicked card to array
     countTimes += 1;
-    console.log('countTimes: ' + countTimes);
-    console.log('finished: ' + finished);
-    if(countTimes === 1 && finished === false) {
-      startTime = Date.now();
-      setInterval(function() {
-        nowTime = Date.now();
-        elapsedTime = Math.floor((nowTime - startTime)/1000);
-        document.querySelector(".time").textContent = elapsedTime;
-      }, 1000);
+    if(countTimes === 1) {
+      start = Date.now();
+      timing(start);
     }
     showCard(target);
     checkCard(target);
-} //end if
+} 
 
 })
 
