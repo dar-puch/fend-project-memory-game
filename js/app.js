@@ -165,11 +165,3 @@ document.querySelector(".btn-close").addEventListener("click", function() {
 document.querySelector(".restart").addEventListener("click", function() {
   resetAll();
 });
-
-document.querySelector(".btn-save").addEventListener("click", function() {
-  this.remove();
-  let form = document.createElement('form');
-  let close = document.querySelector(".btn-close");
-  form.innerHTML = '<label for="name" class="label-name">Your name:</label> <input type="text" class="input-name" name="user_name"><button type="submit" class="btn-submit">Submit</button>'
-  document.querySelector(".result-info").insertBefore(form, close);
-});
