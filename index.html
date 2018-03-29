@@ -22,9 +22,9 @@
         		<li><i class="fa fa-star"></i></li>
         		<li><i class="fa fa-star"></i></li>
         	</ul>
-
         	<span class="moves">0</span> <span class="moves-label">Moves</span>
-
+          <i class="fa fa-clock-o"></i>
+<span class="time-label">Time: </span><span class="time">0</span>
             <div class="restart">
         		<i class="fa fa-repeat"></i>
         	</div>
@@ -81,7 +81,15 @@
             </li>
         </ul>
     </div>
-
+    <div class="overlay">
+      <div class="result-info">
+      <h1>Congratulations! You win!</h1>
+      Time: <span class="result-time"></span><br />
+      Moves: <span class="result-moves"> </span> <ul class="result-stars"></ul><br />
+      <button class="btn-save">Save</button>
+      <button class="btn-close">Close</button>
+      </div>
+    </div>
     <script src="js/app.js"></script>
 </body>
 </html>

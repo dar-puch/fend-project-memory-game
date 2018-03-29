@@ -38,7 +38,8 @@ h1 {
  */
 
 .deck {
-    width: 660px;
+    width: 90%;
+    max-width: 660px;
     min-height: 680px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
@@ -100,14 +101,14 @@ h1 {
     margin-bottom: 10px;
 }
 
-.score-panel .stars {
+.score-panel .stars, .result-stars {
     margin: 0;
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
 }
 
-.score-panel .stars li {
+.score-panel .stars li, .result-stars li {
     list-style: none;
     display: inline-block;
 }
@@ -116,3 +117,57 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.score-panel .fa-clock-o {
+  margin-left: 6px;
+}
+
+/*
+ * Game completed
+ */
+ .overlay {
+   display: block;
+   position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    text-align: center;
+ }
+
+ .result-info {
+   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+width: 100%;
+max-width: 660px;
+background-color: #02ccba;
+padding: 25px;
+margin: auto;
+ }
+
+ button {
+   background-color: #aa7ecd;
+   color: #fff;
+   border-radius: 6px;
+   box-shadow: 5px 2px 5px 0 rgba(46, 61, 73, 0.5);
+   transition: background-color 500ms;
+   font: 300 1.8em/1.5em 'Open Sans', sans-serif;
+   border: none;
+   margin: 10px;
+   padding: 10px 20px;
+   cursor: pointer;
+ }
+
+
+ button:hover {
+   background-color: #000;
+ }
+
+ .btn-close {
+   background-color: #017369;
+ }

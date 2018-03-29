@@ -1,9 +1,15 @@
 
  //List of cards
 let cardsList = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
-let deck = document.querySelector('.deck');
+let deck = document.querySelector('.deck'); //do I need it?
 let open = [];
-let counter = 0;
+let movesCounter = 0;
+let countMatched = 0;
+let overlay = document.querySelector(".overlay");
+let countTimes = 0
+let startTime = 0;
+let endTime = 0;
+let finished = false;
 cardsList = cardsList.concat(cardsList); //each card appears twice
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -42,7 +48,7 @@ function hideCard(card1, card2){
   }
 
 function checkCard(currentCard){
-if (open.length > 1) { //two cards to compare
+if (open.length === 2) { //two cards to compare
     countMoves(); //one move = two cards
   let recentOpen = open[1]; //card added before current
     if (recentOpen.children[0].className === currentCard.children[0].className) { //see if they have the same icons
@@ -55,31 +61,50 @@ if (open.length > 1) { //two cards to compare
     }
 }
 function matchCard(matched) {
+  countMatched += 1;
+  open.length = 0;
   setTimeout(function() {
   matched.classList.add("match", "match-effect");
   matched.classList.remove("open", "show");
   setTimeout(function() {
       matched.classList.remove("match-effect");
   }, 1000)
+  if (countMatched === 16) {
+    gameCompleted();
+  }
 }, 1000);
 }
 
 function countMoves() {
-  counter += 1;
-  console.log('counter: ' + counter);
+  movesCounter += 1;
   let step = 10;
   const movesLabel = document.querySelector(".moves-label");
-  if (counter === 1) {
+  if (movesCounter === 1) {
     movesLabel.textContent = "Move";
   }
   else {
     movesLabel.textContent = "Moves";
   }
-    document.querySelector(".moves").textContent = counter;
-  if (counter%step === 0 && counter <= step * 3){ //remove star each amount of points defined in step (no more than 3 times)
+    document.querySelector(".moves").textContent = movesCounter;
+  if (movesCounter % step === 0 && movesCounter <= step * 3){ //remove star each amount of points defined in step (no more than 3 times)
     document.querySelector(".stars").children[0].remove();
+    console.log('document.querySelector(".stars").innerHtml' + document.querySelector(".stars").innerHTML)
   }
 }
+
+function gameCompleted() {
+overlay.style.display="block";
+finished = true;
+let stars = document.querySelector(".stars").innerHTML;
+document.querySelector(".result-stars").innerHTML = stars;
+document.querySelector(".result-moves").textContent = movesCounter;
+document.querySelector(".result-time").textContent = elapsedTime;
+}
+
+
+
+
+
 
 prepareDeck(); //mix and display cards
 
@@ -87,12 +112,33 @@ deck.addEventListener("click", function(event){
   let target = event.target;
   if (!(target.classList.contains("match") || target.classList.contains("show")) && target.tagName === "LI") { //exclude other clicks than on li and with class open or match
     open.unshift(target); //add clicked card to array
+    countTimes += 1;
+    console.log('countTimes: ' + countTimes);
+    console.log('finished: ' + finished);
+    if(countTimes === 1 && finished === false) {
+      startTime = Date.now();
+      setInterval(function() {
+        nowTime = Date.now();
+        elapsedTime = Math.floor((nowTime - startTime)/1000);
+        document.querySelector(".time").textContent = elapsedTime;
+      }, 1000);
+    }
     showCard(target);
     checkCard(target);
-
-}
+} //end if
 
 })
+
+document.querySelector(".btn-close").addEventListener("click", function(event){
+ overlay.style.display="none";
+})
+
+
+
+
+
+
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
