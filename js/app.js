@@ -1,6 +1,5 @@
 //List of cards
 let cardsList = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
-let deck = document.querySelector('.deck'); //do I need it?
 let open = [];
 let movesCounter = 0;
 let countMatched = 0;
@@ -28,6 +27,7 @@ function shuffle(array) {
 
 function prepareDeck() { // shuffle and assign classes
   shuffle(cardsList);
+  let deck = document.querySelector('.deck');
   let deckLi = deck.getElementsByTagName('li');
   for (let i = 0; i < deckLi.length; i++) {
     deckLi[i].querySelector('i').classList = "fa " + cardsList[i];
@@ -86,7 +86,7 @@ function countMoves() {
     movesLabel.textContent = "Moves";
   }
   document.querySelector(".moves").textContent = movesCounter;
-  if (movesCounter % step === 0 && movesCounter <= step * 3) { //remove star each amount of points defined in step (no more times than initial stars amount)
+  if (movesCounter % step === 0 && movesCounter <= step * 3) { //remove star each amount of points defined in step (no more than 3 stars)
     document.querySelector(".stars").children[0].remove();
   }
 }
@@ -104,24 +104,40 @@ function gameCompleted() {
   overlay.style.display = "block";
   stars = document.querySelector(".stars").childElementCount;
   clearInterval(timerId);
-  let fragment = document.createDocumentFragment(); //make separate function?
-  console.log('stars game completed: ' + stars);
-  for (let i = 0; i < stars; i++) {
-    let li = document.createElement('li');
-    li.innerHTML = '<i class="fa fa-star"></i>';
-    fragment.appendChild(li);
-    console.log('append li');
-  }
+  fragment = updateStars(stars);
   document.querySelector(".result-stars").appendChild(fragment) //display stars prepared above
     console.log('append fragment');
   document.querySelector(".result-moves").textContent = movesCounter;
   document.querySelector(".result-time").textContent = elapsedTime;
 }
 
+function updateStars(number) {
+  let fragment = document.createDocumentFragment(); 
+  for (let i = 0; i < number; i++) {
+    let li = document.createElement('li');
+    li.innerHTML = '<i class="fa fa-star"></i>';
+    fragment.appendChild(li);
+  }
+  return fragment;
+}
 
-
-
-
+function resetAll() {
+open.length = 0;
+movesCounter = 0;
+countMatched = 0;
+countClicks = 0;
+stars = document.querySelector(".stars").childElementCount;
+document.querySelector(".moves").textContent = 0;
+clearInterval(timerId);
+document.querySelector(".time").textContent = 0;
+fragment = updateStars(3-stars);
+document.querySelector(".stars").appendChild(fragment) //display stars prepared above
+let children = document.querySelector(".deck").children;
+for (let i = 0; i < children.length; i++) { //clear classes
+  children[i].classList.remove("open", "show", "match");
+}
+prepareDeck();
+}
 
 prepareDeck(); //mix and display cards
 
@@ -142,30 +158,11 @@ deck.addEventListener("click", function(event) {
 
 document.querySelector(".btn-close").addEventListener("click", function() {
   overlay.style.display = "none";
+  resetAll();
 });
 
 document.querySelector(".restart").addEventListener("click", function() {
-  stars = document.querySelector(".stars").childElementCount;
-    console.log('stars before restart: ' + stars);
-  open.length = 0;
-  movesCounter = 0;
-  countMatched = 0;
-  countClicks = 0;
-  document.querySelector(".moves").textContent = 0;
-  clearInterval(timerId);
-  document.querySelector(".time").textContent = 0;
-  let fragment = document.createDocumentFragment();
-  for (let i = 0; i < (3-stars); i++) { //add stars to get 3
-    let li = document.createElement('li');
-    li.innerHTML = '<i class="fa fa-star">';
-    fragment.appendChild(li);
-  }
-  document.querySelector(".stars").appendChild(fragment) //display stars prepared above
-  let children = document.querySelector(".deck").children;
-  for (let i = 0; i < children.length; i++) { //clear classes
-    children[i].classList.remove("open", "show", "match");
-  }
-  prepareDeck();
+  resetAll();
 });
 
 document.querySelector(".btn-save").addEventListener("click", function() {
