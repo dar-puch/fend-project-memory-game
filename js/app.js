@@ -137,14 +137,26 @@ document.querySelector(".restart").addEventListener("click", function() {
   movesCounter = 0;
   countMatched = 0;
   countClicks = 0;
-  document.querySelector(".moves").textContent = movesCounter;
+  document.querySelector(".moves").textContent = 0;
   clearInterval(timerId);
   document.querySelector(".time").textContent = 0;
-  document.querySelector(".stars").innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
+  let fragment = document.createDocumentFragment();
+  for (let i = 0; i < 3; i++) {
+    let li = document.createElement('li');
+    li.innerHTML = '<i class="fa fa-star">';
+    fragment.appendChild(li);
+  }
+  document.querySelector(".stars").appendChild(fragment) //display three stars, prepared above
   let children = document.querySelector(".deck").children;
-  for (let i = 0; i < children.length; i++) {
+  for (let i = 0; i < children.length; i++) { //clear classes
     children[i].classList.remove("open", "show", "match");
   }
   prepareDeck();
+});
 
+document.querySelector(".btn-save").addEventListener("click", function() {
+  this.remove();
+  let form = document.createElement('form');
+  form.innerHTML = '<label for="name">Your name:</label> <input type="text" id="name" name="user_name"><button type="submit">Submit</button>'
+  document.querySelector(".result-info").appendChild(form);
 });
