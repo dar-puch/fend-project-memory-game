@@ -7,6 +7,7 @@ let countMatched = 0;
 let overlay = document.querySelector(".overlay");
 let countClicks = 0
 let timerId;
+let stars;
 cardsList = cardsList.concat(cardsList); //each card appears twice
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -50,24 +51,26 @@ function checkCard(currentCard) {
     countMoves(); //one move = two cards
     let recentOpen = open[1]; //card added before current
     if (recentOpen.children[0].className === currentCard.children[0].className) { //see if they have the same icons
-      matchCard(currentCard);
-      matchCard(recentOpen); //mark both of them as matched
+      matchCard(currentCard, recentOpen); //mark both of them as matched
     } else {
       hideCard(currentCard, recentOpen); //if cards not match, hide both
     }
   }
 }
 
-function matchCard(matched) {
+function matchCard(card1, card2) {
   countMatched += 1;
   open.length = 0;
   setTimeout(function() {
-    matched.classList.add("match", "match-effect");
-    matched.classList.remove("open", "show");
+    card1.classList.add("match", "match-effect");
+    card2.classList.add("match", "match-effect");
+    card1.classList.remove("open", "show");
+    card2.classList.remove("open", "show");
     setTimeout(function() {
-      matched.classList.remove("match-effect");
+      card1.classList.remove("match-effect");
+      card2.classList.remove("match-effect");
     }, 1000)
-    if (countMatched === 16) {
+    if (countMatched === 2) { //change to 16 after tests
       gameCompleted();
     }
   }, 1000);
@@ -83,7 +86,7 @@ function countMoves() {
     movesLabel.textContent = "Moves";
   }
   document.querySelector(".moves").textContent = movesCounter;
-  if (movesCounter % step === 0 && movesCounter <= step * 3) { //remove star each amount of points defined in step (no more than 3 times)
+  if (movesCounter % step === 0 && movesCounter <= step * 3) { //remove star each amount of points defined in step (no more times than initial stars amount)
     document.querySelector(".stars").children[0].remove();
   }
 }
@@ -99,9 +102,18 @@ function timing(start) {
 
 function gameCompleted() {
   overlay.style.display = "block";
+  stars = document.querySelector(".stars").childElementCount;
   clearInterval(timerId);
-  let stars = document.querySelector(".stars").innerHTML;
-  document.querySelector(".result-stars").innerHTML = stars;
+  let fragment = document.createDocumentFragment(); //make separate function?
+  console.log('stars game completed: ' + stars);
+  for (let i = 0; i < stars; i++) {
+    let li = document.createElement('li');
+    li.innerHTML = '<i class="fa fa-star"></i>';
+    fragment.appendChild(li);
+    console.log('append li');
+  }
+  document.querySelector(".result-stars").appendChild(fragment) //display stars prepared above
+    console.log('append fragment');
   document.querySelector(".result-moves").textContent = movesCounter;
   document.querySelector(".result-time").textContent = elapsedTime;
 }
@@ -133,6 +145,8 @@ document.querySelector(".btn-close").addEventListener("click", function() {
 });
 
 document.querySelector(".restart").addEventListener("click", function() {
+  stars = document.querySelector(".stars").childElementCount;
+    console.log('stars before restart: ' + stars);
   open.length = 0;
   movesCounter = 0;
   countMatched = 0;
@@ -141,12 +155,12 @@ document.querySelector(".restart").addEventListener("click", function() {
   clearInterval(timerId);
   document.querySelector(".time").textContent = 0;
   let fragment = document.createDocumentFragment();
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < (3-stars); i++) { //add stars to get 3
     let li = document.createElement('li');
     li.innerHTML = '<i class="fa fa-star">';
     fragment.appendChild(li);
   }
-  document.querySelector(".stars").appendChild(fragment) //display three stars, prepared above
+  document.querySelector(".stars").appendChild(fragment) //display stars prepared above
   let children = document.querySelector(".deck").children;
   for (let i = 0; i < children.length; i++) { //clear classes
     children[i].classList.remove("open", "show", "match");
