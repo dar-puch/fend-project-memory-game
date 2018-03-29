@@ -5,9 +5,7 @@ let open = [];
 let movesCounter = 0;
 let countMatched = 0;
 let overlay = document.querySelector(".overlay");
-let countTimes = 0
-let startTime = 0;
-let endTime = 0;
+let countClicks = 0
 let timerId;
 cardsList = cardsList.concat(cardsList); //each card appears twice
 
@@ -119,8 +117,8 @@ deck.addEventListener("click", function(event) {
   let target = event.target;
   if (!(target.classList.contains("match") || target.classList.contains("show")) && target.tagName === "LI") { //exclude other clicks than on li and with class open or match
     open.unshift(target); //add clicked card to array
-    countTimes += 1;
-    if (countTimes === 1) {
+    countClicks += 1;
+    if (countClicks === 1) {
       start = Date.now();
       timing(start);
     }
@@ -128,25 +126,25 @@ deck.addEventListener("click", function(event) {
     checkCard(target);
   }
 
-})
+});
 
-document.querySelector(".btn-close").addEventListener("click", function(event) {
+document.querySelector(".btn-close").addEventListener("click", function() {
   overlay.style.display = "none";
-})
+});
 
+document.querySelector(".restart").addEventListener("click", function() {
+  open.length = 0;
+  movesCounter = 0;
+  countMatched = 0;
+  countClicks = 0;
+  document.querySelector(".moves").textContent = movesCounter;
+  clearInterval(timerId);
+  document.querySelector(".time").textContent = 0;
+  document.querySelector(".stars").innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
+  let children = document.querySelector(".deck").children;
+  for (let i = 0; i < children.length; i++) {
+    children[i].classList.remove("open", "show", "match");
+  }
+  prepareDeck();
 
-
-
-
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+});
