@@ -1,12 +1,14 @@
 //List of cards
 let cardsList = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
-let open = [];
-let movesCounter = 0;
-let countMatched = 0;
-let overlay = document.querySelector(".overlay");
-let countClicks = 0
-let timerId;
-let stars;
+let open = [],
+  movesCounter = 0,
+  countMatched = 0,
+  overlay = document.querySelector(".overlay"),
+  deck = document.querySelector('.deck'),
+  countClicks = 0,
+  timerId,
+  stars;
+
 cardsList = cardsList.concat(cardsList); //each card appears twice
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -27,7 +29,6 @@ function shuffle(array) {
 
 function prepareDeck() { // shuffle and assign classes
   shuffle(cardsList);
-  let deck = document.querySelector('.deck');
   let deckLi = deck.getElementsByTagName('li');
   for (let i = 0; i < deckLi.length; i++) {
     deckLi[i].querySelector('i').classList = "fa " + cardsList[i];
@@ -112,7 +113,7 @@ function gameCompleted() {
 }
 
 function updateStars(number) {
-  let fragment = document.createDocumentFragment(); 
+  let fragment = document.createDocumentFragment();
   for (let i = 0; i < number; i++) {
     let li = document.createElement('li');
     li.innerHTML = '<i class="fa fa-star"></i>';
@@ -122,7 +123,7 @@ function updateStars(number) {
 }
 
 function resetAll() {
-open.length = 0;
+open.length = 0; //clear array
 movesCounter = 0;
 countMatched = 0;
 countClicks = 0;
@@ -168,6 +169,7 @@ document.querySelector(".restart").addEventListener("click", function() {
 document.querySelector(".btn-save").addEventListener("click", function() {
   this.remove();
   let form = document.createElement('form');
-  form.innerHTML = '<label for="name">Your name:</label> <input type="text" id="name" name="user_name"><button type="submit">Submit</button>'
-  document.querySelector(".result-info").appendChild(form);
+  let close = document.querySelector(".btn-close");
+  form.innerHTML = '<label for="name" class="label-name">Your name:</label> <input type="text" class="input-name" name="user_name"><button type="submit" class="btn-submit">Submit</button>'
+  document.querySelector(".result-info").insertBefore(form, close);
 });
