@@ -46,7 +46,6 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
   margin: 0 0 3em;
 }
 
@@ -100,13 +99,19 @@ h1 {
   width: 95%;
   max-width: 345px;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  line-height: 2em;
 }
 
 .score-panel .stars, .result-stars {
   margin: 0;
   padding: 0;
   display: inline-block;
-  margin: 0 5px 0 0;
+  margin: 0 5px;
+}
+.score-panel .stars {
+
 }
 
 .score-panel .stars li, .result-stars li {
@@ -115,13 +120,37 @@ h1 {
 }
 
 .score-panel .restart {
-  float: right;
   cursor: pointer;
+
 }
 
 .score-panel .fa-clock-o {
   margin-left: 6px;
+
 }
+
+.score-panel .sound {
+  font-family: FontAwesome;
+  cursor: pointer;
+
+}
+
+.score-panel .sound::before {
+  content: "\f028";
+}
+
+.score-panel .muted::before {
+  content: "\f026";
+}
+
+.info {
+  text-align: left;
+  width: 95%;
+  max-width: 345px;
+  margin-bottom: 10px;
+  line-height: 2em;
+}
+
 
 /*
  * Game completed
@@ -176,7 +205,8 @@ button:hover {
  */
 
  @media screen and (max-width: 372px) {
-   .deck .card {
-     margin: 10px auto;
+
+   .deck {
+   justify-content: center;
    }
  }

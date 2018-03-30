@@ -8,6 +8,7 @@ let open = [],
   stars;
 const deck = document.querySelector('.deck'),
       overlay = document.querySelector(".overlay");
+      audio = document.getElementById("audio");
 
 cardsList = cardsList.concat(cardsList); //each card appears twice so we double elements
 
@@ -53,8 +54,12 @@ function checkCard(currentCard) {
     let recentOpen = open[1]; //card added before current
     if (recentOpen.children[0].className === currentCard.children[0].className) { //check if they have the same icons
       matchCard(currentCard, recentOpen); //mark both of them as matched
+      audio.src = "audio/match.mp3";
+      audio.play();
     } else {
       hideCard(currentCard, recentOpen); //if cards not match, hide both
+      audio.src = "audio/wrong.mp3";
+      audio.play();
     }
   }
 }
@@ -63,7 +68,7 @@ function matchCard(card1, card2) {
   countMatched += 1;
   open.length = 0;
   setTimeout(function() { //wait 1 second before applying effects
-    card1.classList.add("match", "match-effect"); //loop instead?
+    card1.classList.add("match", "match-effect");
     card2.classList.add("match", "match-effect");
     card1.classList.remove("open", "show");
     card2.classList.remove("open", "show");
@@ -113,6 +118,8 @@ function updateStars(number) { //generate and appends passed number of li with s
 
 function gameCompleted() {
   overlay.style.display = "block";
+  audio.src = "audio/applause.mp3";
+  audio.play();
   stars = document.querySelector(".stars").childElementCount;
   clearInterval(timerId);
   fragment = updateStars(stars);
@@ -142,10 +149,12 @@ prepareDeck();
 }
 
 //end of functions and variables, begin of the game
-
+//audio.preload = auto;
 prepareDeck();
 
 deck.addEventListener("click", function(event) {
+  audio.src = "audio/turn.mp3";
+  audio.play();
   let target = event.target;
   if (!(target.classList.contains("match") || target.classList.contains("show")) && target.tagName === "LI") { //exclude other clicks than on li and with class open or match
     open.unshift(target); //add clicked card to array
@@ -162,9 +171,16 @@ deck.addEventListener("click", function(event) {
 
 document.querySelector(".btn-close").addEventListener("click", function() {
   overlay.style.display = "none";
+  audio.pause();
   resetAll();
 });
 
 document.querySelector(".restart").addEventListener("click", function() {
   resetAll();
+});
+
+document.querySelector(".sound").addEventListener("click", function() {
+  let soundClassList = document.querySelector(".sound").classList;
+  soundClassList.toggle("muted");
+  soundClassList.contains("muted") ? audio.muted = true : audio.muted = false;
 });
