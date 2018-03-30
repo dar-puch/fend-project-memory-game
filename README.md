@@ -16,8 +16,10 @@ To have it on your website, copy files (except git stuff) to public_html directo
 
 ## Credits
 Sounds: http://www.NoiseForFun.com.
+
 Concept and initial styles: Udacity (www.udacity.com)
 
 ## Contributors
 <a href="https://github.com/dar-puch"> Daria Puch </a>
+
 <a href="https://github.com/richardkalehoff">Richard Kalehoff </a>
