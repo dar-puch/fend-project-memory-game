@@ -213,8 +213,29 @@ button:hover {
  * Media queries
  */
 
-@media screen and (max-width: 372px) {
-  .deck {
-    justify-content: center;
+@media screen and (max-width: 352px) {
+  .deck .card {
+    margin: 4px;
+  }
+}
+
+@media screen and (max-width: 412px) {
+  .deck .card {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media screen and (min-width: 413px) and (max-width: 448px) {
+  .deck .card {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media screen and (min-width: 449px) and (max-width: 530px) {
+  .deck .card {
+    width: 100px;
+    height: 100px;
   }
 }
