@@ -36,7 +36,7 @@ h1 {
  */
 
 .deck {
-  width: 90%;
+  width: 95%;
   max-width: 660px;
   min-height: 680px;
   background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
@@ -53,6 +53,7 @@ h1 {
 .deck .card {
   height: 125px;
   width: 125px;
+  margin: 10px;
   background: #2e3d49;
   font-size: 0;
   color: #ffffff;
@@ -96,7 +97,8 @@ h1 {
 
 .score-panel {
   text-align: left;
-  width: 345px;
+  width: 95%;
+  max-width: 345px;
   margin-bottom: 10px;
 }
 
@@ -169,24 +171,12 @@ button:hover {
   background-color: #000;
 }
 
-.btn-close {
-  background-color: #017369;
-}
+/*
+ * Media queries
+ */
 
-.btn-submit {
-  border-radius: 4px;
-  box-shadow: 5px 2px 5px 0 rgba(46, 61, 73, 0.5);
-  transition: background-color 500ms;
-  font-size: 1em;
-  line-height: 1em;
-  padding: 10px 20px;
-}
-
-.input-name {
-  box-shadow: 5px 2px 5px 0 rgba(46, 61, 73, 0.5);
-  border-radius: 4px;
-  height: 2.5em;
-  line-height: 1em;
-  padding: 10px;
-  margin: 10px;
-}
+ @media screen and (max-width: 372px) {
+   .deck .card {
+     margin: 10px auto;
+   }
+ }
