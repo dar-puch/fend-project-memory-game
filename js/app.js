@@ -7,8 +7,8 @@ let open = [],
   timerId,
   stars;
 const deck = document.querySelector('.deck'),
-      overlay = document.querySelector(".overlay");
-      audio = document.getElementById("audio");
+  overlay = document.querySelector(".overlay");
+audio = document.getElementById("audio");
 
 cardsList = cardsList.concat(cardsList); //each card appears twice so we double elements
 
@@ -124,28 +124,28 @@ function gameCompleted() {
   clearInterval(timerId);
   fragment = updateStars(stars);
   document.querySelector(".result-stars").appendChild(fragment) //display stars prepared above
-    console.log('append fragment');
+  console.log('append fragment');
   document.querySelector(".result-moves").textContent = movesCounter;
   document.querySelector(".result-time").textContent = elapsedTime;
 }
 
 
 function resetAll() {
-open.length = 0;
-movesCounter = 0;
-countMatched = 0;
-countClicks = 0;
-stars = document.querySelector(".stars").childElementCount;
-document.querySelector(".moves").textContent = 0;
-clearInterval(timerId);
-document.querySelector(".time").textContent = 0;
-fragment = updateStars(3-stars); //add missing stars to get 3
-document.querySelector(".stars").appendChild(fragment) //display stars prepared above
-let children = document.querySelector(".deck").children;
-for (let i = 0; i < children.length; i++) { //clear classes
-  children[i].classList.remove("open", "show", "match");
-}
-prepareDeck();
+  open.length = 0;
+  movesCounter = 0;
+  countMatched = 0;
+  countClicks = 0;
+  stars = document.querySelector(".stars").childElementCount;
+  document.querySelector(".moves").textContent = 0;
+  clearInterval(timerId);
+  document.querySelector(".time").textContent = 0;
+  fragment = updateStars(3 - stars); //add missing stars to get 3
+  document.querySelector(".stars").appendChild(fragment) //display stars prepared above
+  let children = document.querySelector(".deck").children;
+  for (let i = 0; i < children.length; i++) { //clear classes
+    children[i].classList.remove("open", "show", "match");
+  }
+  prepareDeck();
 }
 
 //end of functions and variables, begin of the game

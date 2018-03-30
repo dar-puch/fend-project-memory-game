@@ -19,6 +19,15 @@ body {
   font-family: 'Coda', cursive;
 }
 
+a {
+  text-decoration: none;
+  color: #aa7ecd;
+}
+
+a:hover {
+  color: #02ccba;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -104,42 +113,42 @@ h1 {
   line-height: 2em;
 }
 
-.score-panel .stars, .result-stars {
+.stars, .result-stars {
   margin: 0;
   padding: 0;
   display: inline-block;
   margin: 0 5px;
 }
-.score-panel .stars {
 
+.stars {
+  padding: 15px 0;
 }
 
-.score-panel .stars li, .result-stars li {
+.stars li, .result-stars li {
   list-style: none;
   display: inline-block;
 }
 
-.score-panel .restart {
+.restart {
   cursor: pointer;
-
+  padding: 15px;
 }
 
-.score-panel .fa-clock-o {
-  margin-left: 6px;
-
+.time-label, .time, .moves, .moves-label {
+  padding: 15px 0;
 }
 
-.score-panel .sound {
+.sound {
   font-family: FontAwesome;
   cursor: pointer;
-
+  padding: 15px;
 }
 
-.score-panel .sound::before {
+.sound::before {
   content: "\f028";
 }
 
-.score-panel .muted::before {
+.muted::before {
   content: "\f026";
 }
 
@@ -150,7 +159,6 @@ h1 {
   margin-bottom: 10px;
   line-height: 2em;
 }
-
 
 /*
  * Game completed
@@ -173,7 +181,8 @@ h1 {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /*centers horizontally and vertically*/
+  transform: translate(-50%, -50%);
+  /*centers horizontally and vertically*/
   width: 100%;
   max-width: 660px;
   background-color: #02ccba;
@@ -204,9 +213,8 @@ button:hover {
  * Media queries
  */
 
- @media screen and (max-width: 372px) {
-
-   .deck {
-   justify-content: center;
-   }
- }
+@media screen and (max-width: 372px) {
+  .deck {
+    justify-content: center;
+  }
+}

@@ -19,4 +19,4 @@ http://www.puchweb.pl/memory/
 
 ## Installation
 
-To have it on your website, copy all files (except git stuff) to public_html directory on your server.
+To have it on your website, copy files (except git stuff) to public_html directory on your server.
