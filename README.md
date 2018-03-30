@@ -5,6 +5,7 @@
 * [Features](#Features)
 * [Demo](#Demo)
 * [Installation](#Installation)
+* [Credits](#Credits)
 
 ## Features
 Cards are mixed randomly before each game.
@@ -20,3 +21,7 @@ http://www.puchweb.pl/memory/
 ## Installation
 
 To have it on your website, copy files (except git stuff) to public_html directory on your server.
+
+## Credits
+Sounds: http://www.NoiseForFun.com.
+Concept and initial styles: Udacity (www.udacity.com)
